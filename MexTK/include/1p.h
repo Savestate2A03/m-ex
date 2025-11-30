@@ -23,10 +23,10 @@ struct ClassicLineup // array of these @
 
 // variables
 extern ClassicLineup stc_clsc_lineup;
-extern u8 stc_clsc_shuffledorder1; // 9 elements
-extern u8 stc_clsc_shuffledorder2; // 10 elements
-extern u8 stc_clsc_shuffledorder3; // 27 elements
-extern u8 stc_clsc_shuffledorder4; // 38 elements
+extern u8 stc_clsc_shuffledorder1[9];
+extern u8 stc_clsc_shuffledorder2[10];
+extern u8 stc_clsc_shuffledorder3[27];
+extern u8 stc_clsc_shuffledorder4[38];
 
 // functions
 ClassicLineupDesc *ClassicMode_GetNextNonDuplicateLineupDesc(ClassicLineupDesc *lineupdesc, s8 *shuffled_order, ClassicLineup *final_lineup); // finds and returns a ptr to the first lineupdesc without a character that matches p1. checks in the order of shuffled order
