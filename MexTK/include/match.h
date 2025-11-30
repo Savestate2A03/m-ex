@@ -2812,23 +2812,23 @@ struct Match // static match struct @ 8046b6a0
     MatchInit match;            // 0x24c8
 };
 
-static Match *stc_match = 0x8046b6a0;
-static MatchCamera *stc_matchcam = 0x80452c68;
-static COBJ **stc_matchcam_cobj = R13 + -0x523c;
-static MatchHUD *stc_matchhud = 0x804a0fd8;
-static MatchOffscreen *stc_match_offscreen = 0x804a1de0;
-static ExclamData *stc_exclam_data = 0x803f9628; // 8 of these
-static HSD_Archive **stc_ifall_archive = 0x804d6d5c;
-static CmSubject **stc_match_camera_subject = 0x804d6468; // linked list of all camera boxes
-static int *stc_match_canvas = 0x804a1f58;
-static GOBJ **stc_match_screencolor_gobj = 0x804d63e0;
-static u8 *stc_hud_is_hidden = 0x804D6D6C;
-static u8 *stc_develop_hide_hud = 0x804d6d58; //
-static float *stc_match_fgm_volume = R13 + -0x7dbc;
-static float *stc_match_bgm_volume = R13 + -0x7db8;
-static JOBJDesc **stc_intro_scene_data = R13 + -0x50a4;
-static HSD_Archive **stc_intro_archive = R13 + -0x50ac;
-static HSD_Archive **stc_viwait_archive = R13 + -0x474c;
+extern Match stc_match;
+extern MatchCamera stc_matchcam;
+extern COBJ *stc_matchcam_cobj;
+extern MatchHUD stc_matchhud;
+extern MatchOffscreen stc_match_offscreen;
+extern ExclamData stc_exclam_data[8];
+extern HSD_Archive *stc_ifall_archive;
+extern CmSubject *stc_match_camera_subject; // linked list of all camera boxes
+extern int stc_match_canvas;
+extern GOBJ *stc_match_screencolor_gobj;
+extern u8 stc_hud_is_hidden;
+extern u8 stc_develop_hide_hud;
+extern float stc_match_fgm_volume;
+extern float stc_match_bgm_volume;
+extern JOBJDesc *stc_intro_scene_data;
+extern HSD_Archive *stc_intro_archive;
+extern HSD_Archive *stc_viwait_archive;
 
 /*** Functions ***/
 CmSubject *CameraSubject_Alloc();

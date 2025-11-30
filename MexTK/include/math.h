@@ -13,13 +13,14 @@
 /// @brief
 /// @param v
 /// @return the absolute value of a given float
-inline float fabs(float v)
-{
-    if (v < 0)
-        return -v;
-    else
-        return v;
-}
+// REMOVED: included in linker as of 2025-11-29
+// inline float fabs(float v)
+// {
+//     if (v < 0)
+//         return -v;
+//     else
+//         return v;
+// }
 /// @brief
 /// @param v a float value
 /// @return the sign of x
@@ -39,11 +40,6 @@ inline float Vec2_Magnitude(Vec2 *v)
 }
 
 /*** Functions ***/
-// float fmod(float a, float b);
-// float atan(float in);
-float atan2(float y, float x);
-float sin(float x);
-float cos(float x);
 void MTXOrtho(Mtx44 m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f); //
 void MTXLookAt(Mtx *dest, Vec3 *eye, Vec3 *up, Vec3 *target);
 void MTXRotAxisRad(Mtx *m, Vec3 *axis, float rad); // Sets a matrix for rotation about an arbitrary axis whose ( x, y, z ) components are specified by axis.
@@ -71,7 +67,6 @@ void HSD_MtxGetRotation(Mtx *m, Vec3 *dest);
 void HSD_MtxGetTranslate(Mtx *m, Vec3 *dest);
 void HSD_MtxSRT(Mtx *m, Vec3 *scale, Vec3 *rot, Vec3 *trans, int unk);
 void MatToQuat(Mtx *m, Vec4 *dest); // matrix to quat
-float sqrtf(float num);
 void MTXRotRad(Mtx m, char axis, f32 rad);
 float Vec2_CalculateAngle(Vec2 *a, Vec2 *b);
 float Vec3_CalculateAngle(Vec3 *a, Vec3 *b);

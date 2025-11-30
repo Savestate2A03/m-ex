@@ -763,8 +763,8 @@ typedef enum _GXAnisotropy
     GX_ANISO_4          = 2   // 4× anisotropy
 } GXAnisotropy;
 
-static volatile GXPipe *gx_pipe = 0xCC008000;
-static VIUnknown *_p = 0x804c0980;
+extern volatile GXPipe gx_pipe;
+extern VIUnknown _p;
 
 void GXSetColor(GXColor *color);
 void GXSetZMode(GXBool compare_enable, GXCompare func, GXBool update_enable);

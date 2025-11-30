@@ -191,7 +191,6 @@ void SpecialAirHi_IASACallback(GOBJ *gobj);
 void SpecialAirHi_PhysicCallback(GOBJ *gobj);
 void SpecialAirHi_CollisionCallback(GOBJ *gobj);
 
-// SpecialLw
 void SpecialLw_AnimationCallback(GOBJ *gobj);
 void SpecialLw_IASACallback(GOBJ *gobj);
 void SpecialLw_PhysicCallback(GOBJ *gobj);
@@ -205,25 +204,20 @@ void SpecialAirLw_CollisionCallback(GOBJ *gobj);
 void SpecialN_SpawnFireballThink(GOBJ *gobj);
 void SpecialS_SpawnCapeThink(GOBJ *fighter);
 
-// #define bool u8
-// #define true 1
-// #define false 0
-#include <stdbool.h>
-
 /// @brief checks item collision with any line and applies bounce physics if it touches any
 /// @param item
 /// @return TRUE if collision was made and FALSE otherwise
-bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
+bool Item_CollBounce(GOBJ *item);
 
 /// @brief removes all references to specificed fighter from item
 /// @param item
 /// @param fighter
 /// @return TRUE if fighter reference was removed and FALSE otherwise
-bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
+bool Item_RemoveFighterReference(GOBJ *item, GOBJ *fighter);
 
 /// @brief updates item flags related to hitlag TODO: better description
 /// @param item
-void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
+void Item_ClearHitlagFlag(GOBJ *item);
 
 /// @brief 
 /// @param item 

@@ -104,19 +104,13 @@ void Text_DestroySisHeap();
 
 /*** Variables ***/
 // Text data
-static int *stc_textheap_size = (int *)(R13 + (-0x3d38));
-static TextCanvas **stc_textheap_start = (TextCanvas **)(R13 + (-0x3d34));
-static TextCanvas **stc_textheap_next = (TextCanvas **)(R13 + (-0x3d30));
-static TextCanvas **stc_textheap_first = (TextCanvas **)(R13 + (-0x3d2c));
-
-// Text object
-static Text **stc_text_first = (TextCanvas **)(R13 + (-0x3d28));
-
-// Text canvas
-static TextCanvas **stc_textcanvas_first = (TextCanvas **)(R13 + (-0x3d24));
-
-// Sis Library
-static HSD_Archive **stc_sis_archives = (HSD_Archive **)0x804d1110; // array of sis file archive pointers
-static SISData **stc_sis_data = (void **)0x804d1124;                // array of currently loaded sis data, indexed by sis_id
+extern int stc_textheap_size;
+extern TextCanvas *stc_textheap_start;
+extern TextCanvas *stc_textheap_next;
+extern TextCanvas *stc_textheap_first;
+extern Text *stc_text_first;
+extern TextCanvas *stc_textcanvas_first;
+extern HSD_Archive *stc_sis_archives;
+extern SISData *stc_sis_data;
 
 #endif

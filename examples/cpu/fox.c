@@ -7,7 +7,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../MexTK/mex.h"
-void Fox_CPUThink(FighterData *fd);
+
+void Fox_OnLoad(GOBJ *fighter);     // Defined in linker
+void OnLoad(GOBJ *fighter);         // Forward declaration (opting out of using a header)
+void Fox_CPUThink(FighterData *fd); // Forward declaration (opting out of using a header)
 
 /// --------------------------Setup--------------------------------
 /// MexCPU is setup in the Fighter's OnLoad function
@@ -105,13 +108,13 @@ static MexCpuData cpu_data =
     // see Fox_CPUThink for more details
     .Think = Fox_CPUThink,
 };
+
 /// @brief Override the Fighter's OnLoad function
 /// @param gobj 
 void OnLoad(GOBJ *fighter)
 {
     // this will simply call Fox's original OnLoad
     // we are not making a custom fighter here, so no need for any changes
-    void (*Fox_OnLoad)(GOBJ *fighter) = (void *)0x800e57ac;
     Fox_OnLoad(fighter);
     
     // Initialize our custom data by passing the 

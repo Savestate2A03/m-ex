@@ -730,17 +730,16 @@ struct HSD_SObjDesc
 };
 
 /*** Static Variables ***/
-// static GOBJ ***stc_gobj_gx_lookup = R13 + (-0x3E7C);
-static GOBJ ***stc_gobj_lookup = R13 + (-0x3E74);    //
-static u8 *stc_gobj_proc_num = 0x804ce382;           // number of elements in the below array
-static GOBJProc ***stc_gobjproc_lookup = 0x804D7840; // array of gobj procs ptrs
-static GOBJProc **stc_gobjproc_cur = 0x804d7838;     // current gobj proc being processed
-static u32 *stc_gobjproc_updateidx_cur = 0x804d783c; // update index of the current gobj proc being processed. this is compared to
-static u8 *objkind_sobj = R13 + -(0x3D40);
-static u8 *objkind_cobj = R13 + -(0x3E55);
-static u8 *objkind_lobj = R13 + -(0x3E56);
-static u8 *objkind_jobj = R13 + -(0x3E57);
-static u8 *objkind_fog = R13 + -(0x3E58);
+extern GOBJ **stc_gobj_lookup;
+extern u8 stc_gobj_proc_num;           // number of elements in the below array
+extern GOBJProc **stc_gobjproc_lookup; // array of gobj procs ptrs
+extern GOBJProc *stc_gobjproc_cur;     // current gobj proc being processed
+extern u32 stc_gobjproc_updateidx_cur; // update index of the current gobj proc being processed. this is compared to
+extern u8 stc_objkind_sobj;
+extern u8 stc_objkind_cobj;
+extern u8 stc_objkind_lobj;
+extern u8 stc_objkind_jobj;
+extern u8 stc_objkind_fog;
 
 /*** Functions ***/
 void JOBJ_SetAnimationRate(JOBJ *jobj, float rate);

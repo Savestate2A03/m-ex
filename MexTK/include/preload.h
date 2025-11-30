@@ -134,7 +134,7 @@ struct Preload
     PreloadEntry entry[80]; // 0xac
 };
 
-static PreloadHeapLookup *stc_preload_heaps_lookup = 0x804dfb64;
+extern PreloadHeapLookup stc_preload_heaps_lookup;
 
 /*** Functions ***/
 void Preload_Update();                                                                                                                                               // checks for new files to preload and begins loading them synchronously

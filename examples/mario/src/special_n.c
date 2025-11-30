@@ -72,7 +72,7 @@ void IS_MarioFireballSpawn(GOBJ *gobj)
 	Item_SetLifeTimer(gobj, attributes->life);
 
 	// change the item's state
-	ItemStateChange(gobj, STATE_FIREBALL, 2);
+	Item_StateChange(gobj, STATE_FIREBALL, 2);
 
 	return;
 }
@@ -169,7 +169,7 @@ void SpecialN_AnimationCallback(GOBJ *gobj)
 void SpecialN_IASACallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialNFtCmd *script_flags = (SpecialNFtCmd *)(&fighter_data->ftcmd_var);
 
 	// flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)
@@ -237,7 +237,7 @@ void SpecialAirN_AnimationCallback(GOBJ *gobj)
 void SpecialAirN_IASACallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialNFtCmd *script_flags = (SpecialNFtCmd *)(&fighter_data->ftcmd_var);
 
 	// ftcmd_var.flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)

@@ -67,12 +67,12 @@ bool OnPickup(GOBJ *item)
         if (Item_GetGroundAirState(item) == 1)
         {   
             // enter airborne animation state
-            ItemStateChange(item, 1, 2);
+            Item_StateChange(item, 1, 2);
         }
         else
         {   
             // enter grounded animation state
-            ItemStateChange(item, 0, 2);
+            Item_StateChange(item, 0, 2);
         }
 
         // apply first frame of animation and subaction immediatly

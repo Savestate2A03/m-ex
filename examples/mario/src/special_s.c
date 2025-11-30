@@ -459,7 +459,7 @@ void SpecialAirS_PhysicCallback(GOBJ *fighter)
 void SpecialAirS_TouchGround(GOBJ *fighter)
 {
 	FighterData *fighter_data = fighter->userdata;
-	SpecialSVar *state_var = &fighter_data->state_var;
+	SpecialSVar *state_var = (SpecialSVar *)(&fighter_data->state_var);
 
 	fighter_data->fighter_var.ft_var4 = 0;
 

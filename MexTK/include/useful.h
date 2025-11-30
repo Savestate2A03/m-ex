@@ -1,15 +1,20 @@
 #ifndef MEX_H_USEFUL
 #define MEX_H_USEFUL
 
-// #include <stdarg.h>
-
 #include "structs.h"
 #include "datatypes.h"
 
 typedef s64 OSTime;
 typedef s32 OSPriority;
 
-char *strrchr(const char *, int);
+static inline char *strrchr(const char *s, int c) {
+    const char *last = NULL;
+    do {
+        if (*s == (char)c)
+            last = s;
+    } while (*s++);
+    return (char *)last;
+}
 
 /* Priority range */
 #define OS_PRIORITY_MIN      0     // Highest possible priority
@@ -28,8 +33,8 @@ char *strrchr(const char *, int);
 #define OSRoundDown32B(x) (((u32)(x)) & ~(32 - 1))
 #define OSRoundUp512B(x) (((u32)(x) + 512 - 1) & ~(512 - 1)) // using this for card reads
 #define OSRoundDown512B(x) (((u32)(x)) & ~(512 - 1))         // using this for card reads
-#define OSTicksToMilliseconds(ticks) ((ticks) / ((os_info->bus_clock / 4) / 1000))
-#define OSTicksToMicroseconds(ticks) ((ticks) / ((os_info->bus_clock / 4) / 1000000))
+#define OSTicksToMilliseconds(ticks) ((ticks) / ((os_info.bus_clock / 4) / 1000))
+#define OSTicksToMicroseconds(ticks) ((ticks) / ((os_info.bus_clock / 4) / 1000000))
 #define MillisecondsSinceTick(ticks) ((float)OSTicksToMicroseconds(OSGetTick() - ticks) / 1000) // returns microseconds between tick given and the current tick
 #define BytesToKB(bytes) ((float)bytes / 1000.0)
 #define BytesToMB(bytes) ((float)bytes / 1000000.0)
@@ -595,12 +600,13 @@ typedef struct SIXYLookup
 } SIXYLookup;
 
 /*** Static Vars ***/
-static OSInfo *os_info = 0x80000000;
-static int *stc_fst_totalentrynum = 0x804D7284;
-static FSTEntry **stc_fst_entries = 0x804D727C; // -0x4424, indexed by entrynum (0 is always the root directory)
-static char **stc_fst_filenames = 0x804D7280;   // use FSTEntry.filename_offset to find an entrynums name
-static int *stc_si_sampling_rate = 0x804D740C;
-static SIXYLookup *stc_si_xy = 0x80402ca0;
+extern void *stc_R13;
+extern OSInfo os_info;
+extern int stc_fst_totalentrynum;
+extern FSTEntry *stc_fst_entries; // -0x4424, indexed by entrynum (0 is always the root directory)
+extern char *stc_fst_filenames;   // use FSTEntry.filename_offset to find an entrynums name
+extern int stc_si_sampling_rate;
+extern SIXYLookup stc_si_xy;
 
 /*** OS Library ***/
 void OSPanic(const char* file, int line, const char* msg, ...);
@@ -644,8 +650,6 @@ int DVDCancel(DVDCommandBlock* block);
 int File_Read(int entrynum, int file_offset, void *buffer, int read_size, int flags, int unk_index, void *cb, int cb_arg2); // just use 0x21 for flags if dram, 0x23 if aram, 1 for unk_index
 int File_ReadSync(int entrynum, int file_offset, void *buffer, int read_size, int flags, int unk_index);                    // just use 0x21 for flags if dram, 0x23 if aram, 1 for unk_index
 int File_GetSize(char *file_name);
-// void memcpy(void *dest, void *source, int size);
-// void memset(void *dest, int fill, int size);
 s32 CARDGetStatus(s32 chan, s32 fileNo, CARDStat *stat);
 s32 CARDMountAsync(s32 chan, void *workArea, void *detachCallback, void *attachCallback);
 s32 CARDUnmount(s32 chan);
@@ -676,7 +680,6 @@ void DCFlushRange(void *startAddr, u32 nBytes);
 void DCFlushRangeNoSync(void *startAddr, u32 nBytes);
 void DCInvalidateRange(void *startAddr, u32 nBytes);
 void TRK_FlushCache(void *startAddr, u32 nBytes);
-// int memcmp(void *buf1, void *buf2, u32 nBytes);
 void blr();
 void blr2();
 
@@ -698,18 +701,39 @@ void VIWaitForRetrace();
 void VIConfigure(GXRenderModeObj *rm);
 void VISetPostRetraceCallback(void *cb);
 
-/** String Library **/
-#define vsprintf(buffer, format, args) _vsprintf(buffer, -1, format, args)
-// int sprintf(char *s, const char *format, ...);
-// int _vsprintf(char *str, int unk, const char *format, va_list arg);
-// int strlen(char *str);
-// char *strchr(char *str, char c); // searches for the first occurrence of the character c (an unsigned char) in the string pointed to by the argument str.
-// int strcmp(char *str1, char *str2);
-// int strncmp(char *str1, char *str2, int size);
-// char *strcpy(char *dest, char *src);            // copies the string pointed to, by src to dest.
-// char *strncpy(char *dest, char *src, int size); // copies the string pointed to, by src to dest.
-// unsigned long int strtoul(const char *str, char **endptr, int base);
-// int tolower(char in);
+/** Library Functions **/
+char *strcpy(char *dest, const char *src);
+char *strncpy(char *dest, const char *src, size_t size);
+char *strchr(const char *str, char c); // searches for the first occurrence of the character c (an unsigned char) in the string pointed to by the argument str.
+int strcmp(const char *s1, const char *s2);
+int strncmp(const char *s1, const char *s2, size_t size);
+int strlen(const char *str);
+int sprintf(char *s, const char *format, ...);
+int vsnprintf(char *s, size_t n, const char *format, va_list arg);
+#define vsprintf(s, fmt, arg) vsnprintf((s), ULONG_MAX, (fmt), (arg))
+unsigned int strtoul(const char *startptr, char **endptr, int base); // string to unsigned long, actually 32-bits
+
+char* toupper(char c); // returns a pointer to the upper/lower character in a lookup table
+char* tolower(char c); // returns a pointer to the upper/lower character in a lookup table
+
+void* memset(void *ptr, int value, int bytes);
+void* memcpy(void *restrict s1, const void *restrict s2, size_t size);
+int memcmp(const void *s1, const void *s2, size_t n);
+void* memmove(void *dest, const void *src, size_t n);
+
+float sqrtf(float x);
+float powf(float base, float exponent);
+int powi(int base, int exponent);
+double tan(double x);
+double cos(double x);
+double sin(double x);
+double log(double x);
+double fabs(double x);
+double atan(double x);
+double atan2(double y, double x);
+double fmod(double x, double y);
+int rand(void);
+double frexp(double x, int *exp);
 
 void Wind_StageCreate(Vec3 *pos, int duration, float radius, float lifetime, float angle, float left, float right, float top, float bottom);
 void Wind_FighterCreate(Vec3 *pos, int duration, float radius, float lifetime, float angle);

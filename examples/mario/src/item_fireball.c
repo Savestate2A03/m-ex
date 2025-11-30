@@ -82,12 +82,12 @@ bool Fireball_PhysCB(GOBJ *item)
 {
     ItemData *item_data = item->userdata;
     itCommonAttr *attributes = item_data->common_attr;
-    itCommonData *stc_itCommon = *stc_itPublicData;
+    itCommonData *stc_itCommon = stc_itPublicData->common_data;
 
     Item_ProjectileVelocityCalculate(item, attributes->fall_speed, attributes->fall_speed_max);
     Item_UpdateSpin(item, stc_itCommon->x68);
 
-    return;
+    return false;
 }
 
 /// @brief Original: 0x8029B8EC
@@ -105,7 +105,7 @@ bool Fireball_CollCB(GOBJ *item)
     // apply bounce physics and check if fireball bounced off of wall
     // this function will return 1 if the item collided with something
     // in addition it will make the item "bounce" off of any surface
-    if (Item_Coll_Bounce(item))
+    if (Item_CollBounce(item))
     {
         // check to see if the current speed is within a certain threshold
         // if speed is slower than a given attribute, then destroy the fireball

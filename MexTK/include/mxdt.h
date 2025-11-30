@@ -348,7 +348,7 @@ typedef struct MexData
     void *misc;
 } MexData;
 
-static MEXFunctionLookup **stc_mexfunction_lookup = 0x804dfad8;
+extern MEXFunctionLookup *stc_mexfunction_lookup;
 
 /*** Functions ***/
 HSD_Archive *MEX_LoadRelArchive(char *file, void *functions, char *symbol);
@@ -370,7 +370,7 @@ void *MEX_GetData(int index);
 
 /// @brief 
 /// @return 
-inline MexData *MEX_GetMexData()
+static inline MexData *MEX_GetMexData()
 {
     return MEX_GetData(MXDT_MEXDATA);
 }
@@ -379,7 +379,7 @@ inline MexData *MEX_GetMexData()
 /// @param func 
 /// @param symbol 
 /// @return 
-u8 *MEXFunction_GetAddrFromSymbol(MEXFunction *func, char *symbol)
+static inline u8 *MEXFunction_GetAddrFromSymbol(MEXFunction *func, char *symbol)
 {
     for (int i = 0; i < func->debug_symbol_num; i++)
     {
@@ -394,7 +394,7 @@ u8 *MEXFunction_GetAddrFromSymbol(MEXFunction *func, char *symbol)
 /// @param archive 
 /// @param symbol_name 
 /// @param return_func_array 
-static MEXFunction *MEX_InitRELDAT(HSD_Archive *archive, char *symbol_name, int *return_func_array)
+static inline MEXFunction *MEX_InitRELDAT(HSD_Archive *archive, char *symbol_name, u8 **return_func_array)
 {
     MEXFunction *mex_function = Archive_GetPublicAddress(archive, symbol_name);
 
@@ -424,12 +424,12 @@ static MEXFunction *MEX_InitRELDAT(HSD_Archive *archive, char *symbol_name, int 
 /// @param c_kind
 /// @param costume_id
 /// @return
-static float MEX_GetStockIconFrame(Stc_icns *stc_icns, int c_kind, int costume_id)
+static inline float MEX_GetStockIconFrame(Stc_icns *stc_icns, int c_kind, int costume_id)
 {
     FtKindDesc *ftkind_desc = MEX_GetData(MXDT_FTKINDDESC);
     int ft_kind = ftkind_desc[c_kind].ft_main;
 
-    int ftkind_num = MEX_GetData(MXDT_FTINTNUM);
+    int ftkind_num = (int)MEX_GetData(MXDT_FTINTNUM);
     float stock_frame;
 
     // check for special fighter
@@ -449,7 +449,7 @@ static float MEX_GetStockIconFrame(Stc_icns *stc_icns, int c_kind, int costume_i
 /// @param volume
 /// @param panning
 /// @return
-static int MEX_PlayStageSoundRaw(int sfxid, int volume, int panning)
+static inline int MEX_PlayStageSoundRaw(int sfxid, int volume, int panning)
 {
     // get soundbank id
     MexData *md = MEX_GetData(MXDT_MEXDATA);
@@ -462,7 +462,7 @@ static int MEX_PlayStageSoundRaw(int sfxid, int volume, int panning)
 
 /// @brief 
 /// @return 
-inline int MEX_GetStageBankIndex()
+static inline int MEX_GetStageBankIndex()
 {
     MexData *md = MEX_GetData(MXDT_MEXDATA);
     int internal_id = Stage_ExternalToInternal(Stage_GetExternalID());

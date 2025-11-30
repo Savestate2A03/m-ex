@@ -1,7 +1,5 @@
 #include "mex.h"
 
-static void *Fighter_CPUProc = 0x8006aba0; // TODO: should this go in the link file?
-
 /// Each fighter module can only have 1 mexcpu_data
 static int mexcpu_spoof;
 static MexCpuData* mexcpu_data;
@@ -42,7 +40,7 @@ void MexCPU_ProcCustom(GOBJ *fighter)
     if (fd->flags.sleep == 0 &&
         Fighter_CheckToProcessCPU(fd) != 0)
     {
-        PlCoCpuTable *tbl = *plco_cpu_table;
+        PlCoCpuTable *tbl = plco_cpu_table;
 
         // backup cpu data
         int temp_kind = fd->kind;

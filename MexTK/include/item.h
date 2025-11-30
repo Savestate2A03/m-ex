@@ -7,7 +7,6 @@
 #include "gx.h"
 #include "color.h"
 #include "dynamics.h"
-#include <stdbool.h>
 
 // Item IDs
 enum ItemID
@@ -177,10 +176,10 @@ enum ItemID
     ITEM_BIRDOEGG = 236,
 };
 
-// ItemStateChange Flags
-#define ITEMSTATE_UPDATEANIM 0x2
-#define ITEMSTATE_GRAB 0x4
-#define ITEMSTATE_KEEPHIT 0x10 // dont remove hitboxes on state change
+// Item_StateChange Flags
+#define ITEM_STATE_UPDATEANIM 0x2
+#define ITEM_STATE_GRAB 0x4
+#define ITEM_STATE_KEEPHIT 0x10 // dont remove hitboxes on state change
 
 // Item hold_kind definitions
 enum ItHoldKind
@@ -337,7 +336,7 @@ struct itPublicData
 struct itData
 {
     itCommonAttr *param;  // 0x00
-    float *param_ext;     // 0x04
+    void *param_ext;      // 0x04
     void *hurtboxes;      // 0x08
     void *states;         // 0x0C
     void *model;          // 0x10
@@ -985,8 +984,8 @@ struct ItemData
 
 /*** static reference ***/
 
-static itPublicData **stc_itPublicData = (R13 + -0x4978);
-static ItemDesc **stc_itdesc_enemies = (R13 + -0x4968);
+extern itPublicData stc_itPublicData;
+extern ItemDesc stc_itdesc_enemies;
 
 /*** Functions ***/
 void Item_IndexStageItem(ItemDesc *item_desc, int index);
@@ -1006,8 +1005,8 @@ int Item_CollAir_Bounce(GOBJ *item, void *callback);
 int Item_CollAir_Land(GOBJ *item, void *callback);
 int Item_CollAir_NoCB(GOBJ *item);
 void Item_SetGroundedUpright(GOBJ *item);
-void ItemStateChange(GOBJ *item, int stateID, int flags);
-int ItemFrameTimer(GOBJ *item);
+void Item_StateChange(GOBJ *item, int stateID, int flags);
+int Item_FrameTimer(GOBJ *item);
 void Item_PlaceOnGroundBelow(GOBJ *item);
 int Item_CheckIfTouchingWall(GOBJ *item, float *unk[]);
 void Item_InitGrab(ItemData *item, int unk, void *OnItem, void *OnFighter);

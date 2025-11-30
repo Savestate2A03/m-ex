@@ -3152,13 +3152,13 @@ struct FtScriptIK
 */
 
 /** Static Variables **/
-static ftCommonBone ***stc_ftbone = (R13 + -0x515C);
-static ftCommonData **stc_ftcommon = (R13 + -0x514C);
-static ColAnimDesc **stc_plco_colanimdesc = 0x804D653C;
-static GXColor **stc_shieldcolors = (R13 + -0x5194);
-static FtDmgVibrateDesc **stc_dmg_vibrate_desc = (R13 + -0x5170);
-static int *stc_ft_hitlog = (R13 + -0x5148); // used as semi-local variables remembering if a solid hit occured @ 8006cbc4
-static int *stc_ft_tiplog = (R13 + -0x5144); // used as semi-local variables remembering if a tip hit occured @ 8006cbc4
+extern ftCommonBone **stc_ftbone;
+extern ftCommonData *stc_ftcommon;
+extern ColAnimDesc *stc_plco_colanimdesc;
+extern GXColor *stc_shieldcolors;
+extern FtDmgVibrateDesc *stc_dmg_vibrate_desc;
+extern int stc_ft_hitlog; // used as semi-local variables remembering if a solid hit occured @ 8006cbc4
+extern int stc_ft_tiplog; // used as semi-local variables remembering if a tip hit occured @ 8006cbc4
 
 /*** Functions ***/
 GOBJ *Fighter_Create(PlayerData *pd);
@@ -3332,6 +3332,7 @@ void Fighter_SetAllHurtboxesNotUpdated(GOBJ *fighter);
 void Fighter_UpdateHurtboxes(FighterData *fighter_data);
 void Fighter_UpdateIK(GOBJ *fighter);
 void Fighter_CPUInitialize(FighterData *fighter_data, int cpu_kind, int cpu_level, int unk);
+void Fighter_CPUProc();
 int Fighter_GetCPUKind(int ply);
 int Fighter_SetCPUKind(int ply, int cpu_kind);
 int Fighter_GetCPULevel(int ply);

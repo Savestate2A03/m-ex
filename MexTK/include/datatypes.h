@@ -15,6 +15,20 @@ typedef unsigned int u32;
 typedef unsigned long long u64;
 typedef float f32;
 typedef double f64;
+typedef unsigned int size_t;
+
+#ifndef NULL
+    #define NULL ((void *)0)
+#endif
+
+// GCC, used for vsnprintf
+#ifndef _VA_LIST_DEFINED
+#define _VA_LIST_DEFINED
+    typedef __builtin_va_list va_list;
+    #define va_start(ap, param) __builtin_va_start(ap, param)
+    #define va_end(ap) __builtin_va_end(ap)
+    #define va_arg(ap, type) __builtin_va_arg(ap, type)
+#endif
 
 // PadGet Types
 #define PADGET_MASTER 0
@@ -33,8 +47,11 @@ typedef float (*Mtx44Ptr)[4];
 #define uint unsigned int
 
 // bool lingo
-#define true 1
-#define false 0
+#ifndef bool
+    #define bool _Bool
+    #define true 1
+    #define false 0
+#endif
 
 // Other Macros
 #define RTOC_PTR(offset) *(void **)(0x804df9e0 + offset)

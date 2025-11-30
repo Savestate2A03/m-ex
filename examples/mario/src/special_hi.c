@@ -8,7 +8,7 @@
 void SpecialHi(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	// clear flags that are going to be used by this action
 	script_flags->can_control = 0;
@@ -27,7 +27,7 @@ void SpecialAirHi(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	// clear flags that are going to be used by this action
 	script_flags->can_control = 0;
@@ -70,7 +70,7 @@ void SpecialHi_IASACallback(GOBJ *gobj)
 
 	MarioAttr *mrAttr = fighter_data->special_attributes;
 
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	float lstick_x = fighter_data->input.lstick.X;
 	float stick_threshold = mrAttr->specialHi_stick_threshold;
@@ -170,7 +170,7 @@ void SpecialHi_OnLand(GOBJ *gobj)
 void SpecialHi_CollisionCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	if (fighter_data->phys.air_state == 1)
 	{
@@ -216,7 +216,7 @@ void SpecialAirHi_IASACallback(GOBJ *gobj)
 
 	MarioAttr *mrAttr = fighter_data->special_attributes;
 
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	float lstick_x = fighter_data->input.lstick.X;
 	float stick_threshold = mrAttr->specialHi_stick_threshold;
@@ -287,7 +287,7 @@ void SpecialAirHi_PhysicCallback(GOBJ *gobj)
 
 	MarioAttr *mrAttr = fighter_data->special_attributes;
 
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	if (script_flags->can_control == 0)
 	{
@@ -311,7 +311,7 @@ void SpecialAirHi_CollisionCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 
-	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialHiFtCmd *script_flags = (SpecialHiFtCmd *)(&fighter_data->ftcmd_var);
 
 	if (fighter_data->phys.air_state == 1)
 	{

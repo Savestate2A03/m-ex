@@ -419,27 +419,27 @@ struct AXLive
 
 typedef void (*ARQCallback)(ARQRequest* req);
 
-static FGMLive *fgm_live = 0x804c45a0; // points to an array of ? FGMLive structs
-static AXLive *ax_live = 0x804c28e0;
-static VPB *stc_voice_data = 0x804c2c64;
-static float *stc_fgm_volume = R13 + -0x7dbc;
-static float *stc_bgm_volume = R13 + -0x7db8;
-static BGMData *stc_bgm_data = R13 + -0x5668;                      // voice index of the bgm currently playing, is -1 when nothing is playing
-static VPB *stc_bgm_vpb = R13 + -0x3f54;                           // is set when the first hps sample is played @ 8038b33c. value is copied to the prev member of the vpb struct before being updated
-static int *stc_bgm_data_seed = R13 + -0x3f50;                     // is used to generate the next bgm's bgm_data
-static int *stc_bgm_tick = R13 + -0x3f44;                          // how many times bgm audio has been updated (incremented @ 8038ad44)
-static BGMData *stc_bgm_data2 = R13 + -0x3f40;                     // contains some data about the bgm, including its voice_index
-static int *stc_bgm_entrynum = R13 + -0x3f3c;                      // entrynum of the hps file currently playing again
-static int *stc_bgm_is_playing = R13 + -0x5668;                    // is -1 when not playing
-static int *stc_bgm_curLoadingHpsChunkHeaderIndex = R13 + -0x3f38; // index of the cur hps chunk header loaded (0-2 circular buffer)
-static int *stc_bgm_lastLoadedHPSChunkIndex = R13 + -0x3f34;       // index of the most recent hps chunk loaded (0-2 circular buffer), changes after hps chunk is loaded @ 8038ad6c
-static int *stc_bgm_curPlayingHpsChunkHeaderIndex = R13 + -0x3f2c; // index of the cur hps chunk header playing (0-2 circular buffer)
-static u8 *stc_bgm_isLoadingHPSChunk = R13 + -0x3f28;              // flag that indicates an hps chunk is being loaded
-static int *stc_bgm_aramAlloc = R13 + -0x3f20;                     // start of the 3 hps chunk circular buffer
-static int *stc_fgm_tick = R13 + -0x3f14;                          // how many times fgm audio has been updated (incremented @ 8038ad44)
-static FGMLive *stc_last_fgmlive = R13 + -0x3f0c;                  // points to the most recently created FGMLive struct
-static int *stc_audioheap_loaded_size = 0x804d6448;                // -0x5258, size of the files loaded into the audio heap
-static int *stc_audioheap_pending_size = 0x804d6450;               // -0x5250, size of the files pending
+extern FGMLive *stc_fgm_live; // an array of ? FGMLive structs
+extern AXLive stc_ax_live;
+extern VPB stc_voice_data;
+extern float stc_fgm_volume;
+extern float stc_bgm_volume;
+extern BGMData stc_bgm_data;                      // voice index of the bgm currently playing, is -1 when nothing is playing
+extern VPB stc_bgm_vpb;                           // is set when the first hps sample is played @ 8038b33c. value is copied to the prev member of the vpb struct before being updated
+extern int stc_bgm_data_seed;                     // is used to generate the next bgm's bgm_data
+extern int stc_bgm_tick;                          // how many times bgm audio has been updated (incremented @ 8038ad44)
+extern BGMData stc_bgm_data2;                     // contains some data about the bgm, including its voice_index
+extern int stc_bgm_entrynum;                      // entrynum of the hps file currently playing again
+extern int stc_bgm_is_playing;                    // is -1 when not playing
+extern int stc_bgm_curLoadingHpsChunkHeaderIndex; // index of the cur hps chunk header loaded (0-2 circular buffer)
+extern int stc_bgm_lastLoadedHPSChunkIndex;       // index of the most recent hps chunk loaded (0-2 circular buffer), changes after hps chunk is loaded @ 8038ad6c
+extern int stc_bgm_curPlayingHpsChunkHeaderIndex; // index of the cur hps chunk header playing (0-2 circular buffer)
+extern u8 stc_bgm_isLoadingHPSChunk;              // flag that indicates an hps chunk is being loaded
+extern int stc_bgm_aramAlloc;                     // start of the 3 hps chunk circular buffer
+extern int stc_fgm_tick;                          // how many times fgm audio has been updated (incremented @ 8038ad44)
+extern FGMLive *stc_last_fgmlive;                  // points to the most recently created FGMLive struct
+extern int stc_audioheap_loaded_size;             // -0x5258, size of the files loaded into the audio heap
+extern int stc_audioheap_pending_size;            // -0x5250, size of the files pending
 
 /* AR */
 void* ARAlloc(u32 length);

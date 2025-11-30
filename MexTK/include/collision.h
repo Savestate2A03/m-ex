@@ -290,12 +290,12 @@ void GrColl_InitMovingGroup(int group_id, JOBJ *jobj, int child_index);
 void GrColl_UpdateMovingGroup(int group_id);
 void GrColl_SetupMovingGroup(int group_id);
 
-static int *stc_colltest = R13 + (COLL_TEST);
-static CollGroup **stc_firstcollgroup = R13 + (-0x51DC);
-static CollGroup **stc_collgroup = R13 + (-0x51E0);
-static CollLine **stc_collline = R13 + (-0x51E4);
-static CollVert **stc_collvert = R13 + (-0x51E8);
-static CollDataStage **stc_colldata = R13 + (-0x51EC);
-static CollLineConnection **stc_first_line_connect = 0x80458e88; // array of 9
+extern int stc_colltest;
+extern CollGroup *stc_firstcollgroup;
+extern CollGroup *stc_collgroup;
+extern CollLine *stc_collline;
+extern CollVert *stc_collvert;
+extern CollDataStage *stc_colldata;
+extern CollLineConnection stc_first_line_connect[9];
 
 #endif

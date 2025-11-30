@@ -202,7 +202,7 @@ struct ScDataIntro
 };
 
 /*** Static Variables ***/
-static SceneInfo *stc_scene_info = 0x80479D30;
+extern SceneInfo stc_scene_info;
 
 /*
 Scene Change Notes

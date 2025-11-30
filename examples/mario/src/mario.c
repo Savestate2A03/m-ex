@@ -38,7 +38,7 @@ void OnLoad(GOBJ *gobj)
 void OnSpawn(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-	MarioCharVar *charvar = &fighter_data->fighter_var;
+	MarioCharVar *charvar = (MarioCharVar *)(&fighter_data->fighter_var);
 
 	// clear the fighter flags
 	Fighter_SetCharacterFlags(gobj, 0, 0);

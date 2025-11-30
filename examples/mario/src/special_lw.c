@@ -2,14 +2,15 @@
 ////////////////////////
 //  Inital SpecialLw  //
 ////////////////////////
+
 ///
-/// 0x800e2050
-///
-void ResetFighterBoneYaw(GOBJ *gobj)
+/// 0x800E207C
+/// Mirrors this: https://github.com/doldecomp/melee/blob/36f062411e35c2df887b21503d71f6304b4d61f4/src/melee/ft/chara/ftMario/ftMr_SpecialLw.c#L27
+void SpecialLw_UpdateBoneRotation(GOBJ *gobj)
 {
-	Fighter_SetBoneRotZ(0, gobj->userdata, 0);
-	return;
+	Fighter_SetBoneRotX(gobj->userdata, 0, 0);
 }
+
 ///
 /// 0x800E207C
 ///
@@ -33,12 +34,12 @@ void SpecialLw(GOBJ *gobj)
 	Fighter_ClampHorizontalVelocity(fighter_data, mrAttr->specialLw_base_air_speed);
 
 	// clear flags for this state
-	SpecialLwFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialLwFtCmd *script_flags = (SpecialLwFtCmd *)(&fighter_data->ftcmd_var);
 	script_flags->decay_air_speed = 0;
 	script_flags->disable_rise = 0;
 
 	// clear state variables
-	SpecialLwVar *state_var = &fighter_data->state_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
 	state_var->air_speed = 0;
 	state_var->on_ground = 0;
 
@@ -46,9 +47,8 @@ void SpecialLw(GOBJ *gobj)
 	state_var->x04 = mrAttr->specialLw_state_Var2 + 1;
 
 	// set take damage and death callbacks
-	// these reset some kind of bone rotation yaw
-	fighter_data->cb.OnTakeDamage = 0x800e2050;
-	fighter_data->cb.OnDeath_State = 0x800e2050;
+	fighter_data->cb.OnTakeDamage = SpecialLw_UpdateBoneRotation;
+	fighter_data->cb.OnDeath_State = SpecialLw_UpdateBoneRotation;
 
 	// spawn effect
 	Effect_SpawnSync(VANILLA_EFFECT_DSPECIAL, gobj, gobj->hsd_object);
@@ -92,12 +92,12 @@ void SpecialAirLw(GOBJ *gobj)
 	Fighter_ClampHorizontalVelocity(fighter_data, mrAttr->specialLw_base_air_speed);
 
 	// clear flags
-	SpecialLwFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialLwFtCmd *script_flags = (SpecialLwFtCmd *)(&fighter_data->ftcmd_var);
 	script_flags->decay_air_speed = 0;
 	script_flags->disable_rise = 0;
 
 	// clear state variables
-	SpecialLwVar *state_var = &fighter_data->state_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
 	state_var->air_speed = 0;
 	state_var->on_ground = 0;
 
@@ -105,9 +105,8 @@ void SpecialAirLw(GOBJ *gobj)
 	state_var->x04 = mrAttr->specialLw_state_Var2 + 1;
 
 	// set take damage and death callbacks
-	// these reset some kind of bone rotation yaw
-	fighter_data->cb.OnTakeDamage = 0x800e2050;
-	fighter_data->cb.OnDeath_State = 0x800e2050;
+	fighter_data->cb.OnTakeDamage = SpecialLw_UpdateBoneRotation;
+	fighter_data->cb.OnDeath_State = SpecialLw_UpdateBoneRotation;
 
 	// spawn effect
 	Effect_SpawnSync(VANILLA_EFFECT_DSPECIAL, gobj, gobj->hsd_object);
@@ -132,8 +131,8 @@ void SpecialLw_AnimationCallback(GOBJ *gobj)
 
 	if (FrameTimerCheck(gobj) == 0)
 	{
-		fighter_data->cb.OnTakeDamage = (void *)0x0;
-		fighter_data->cb.OnDeath_State = (void *)0x0;
+		fighter_data->cb.OnTakeDamage = NULL;
+		fighter_data->cb.OnDeath_State = NULL;
 		Fighter_EnterWait(gobj);
 	}
 	return;
@@ -152,12 +151,12 @@ void SpecialLw_PhysicCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialLwFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialLwFtCmd *script_flags = (SpecialLwFtCmd *)(&fighter_data->ftcmd_var);
 
 	float base_air_speed = mrAttr->specialLw_base_air_speed;
 	float airSpeed = base_air_speed;
 
-	SpecialLwVar *state_var = &fighter_data->state_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
 
 	if (script_flags->decay_air_speed != 0)
 	{
@@ -199,7 +198,7 @@ void SpecialLw_PhysicCallback(GOBJ *gobj)
 ///
 int SpecialLw_UpdateECBBox(GOBJ *gobj, ECBSize *ecb_bones)
 {
-	FighterData *fighter_data = (FighterData *)gobj->userdata;
+	FighterData *fighter_data = gobj->userdata;
 
 	fighter_data->coll_data.topN_Prev.X = fighter_data->coll_data.topN_Curr.X;
 	fighter_data->coll_data.topN_Prev.Y = fighter_data->coll_data.topN_Curr.Y;
@@ -230,7 +229,7 @@ void SpecialLw_CollisionCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialLwVar *state_var = &fighter_data->state_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
 
 	ECBSize fake_ecb = {12, 0, -6, 6, 6, 6};
 
@@ -294,7 +293,7 @@ void SpecialAirLw_AnimationCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialLwFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialLwFtCmd *script_flags = (SpecialLwFtCmd *)(&fighter_data->ftcmd_var);
 
 	if (script_flags->disable_rise != 0)
 	{
@@ -304,8 +303,8 @@ void SpecialAirLw_AnimationCallback(GOBJ *gobj)
 
 	if (FrameTimerCheck(gobj) == 0)
 	{
-		fighter_data->cb.OnTakeDamage = (void *)0x0;
-		fighter_data->cb.OnDeath_State = (void *)0x0;
+		fighter_data->cb.OnTakeDamage = NULL;
+		fighter_data->cb.OnDeath_State = NULL;
 
 		if (mrAttr->specialLw_freefall_toggle == 0)
 		{
@@ -332,8 +331,8 @@ void SpecialAirLw_PhysicCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialLwVar *state_var = &fighter_data->state_var;
-	SpecialLwFtCmd *script_flags = &fighter_data->ftcmd_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
+	SpecialLwFtCmd *script_flags = (SpecialLwFtCmd *)(&fighter_data->ftcmd_var);
 
 	if (fighter_data->fighter_var.ft_var3 == 0)
 	{
@@ -370,7 +369,7 @@ void SpecialAirLw_CollisionCallback(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
 	MarioAttr *mrAttr = fighter_data->special_attributes;
-	SpecialLwVar *state_var = &fighter_data->state_var;
+	SpecialLwVar *state_var = (SpecialLwVar *)(&fighter_data->state_var);
 
 	ECBSize fake_ecb = {12, 0, -6, 6, 6, 6};
 
