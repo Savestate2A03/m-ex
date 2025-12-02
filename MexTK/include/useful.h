@@ -607,6 +607,8 @@ extern FSTEntry *stc_fst_entries; // -0x4424, indexed by entrynum (0 is always t
 extern char *stc_fst_filenames;   // use FSTEntry.filename_offset to find an entrynums name
 extern int stc_si_sampling_rate;
 extern SIXYLookup stc_si_xy;
+extern int stc_max_number_of_heaps;
+
 
 /*** OS Library ***/
 void OSPanic(const char* file, int line, const char* msg, ...);
@@ -622,8 +624,13 @@ void __assert(char *file, int line, char *assert);
 int OSCreateHeap(void *heap_lo, void *heap_hi);
 void OSDestroyHeap(int heap_id);
 int OSAllocFromHeap(int heap_id);
+void* OSAllocFromArenaLo(u32 size, u32 align);
 void OSFreeToHeap(void *alloc);
 int OSCheckHeap(int heap);
+void* OSGetArenaLo();
+void* OSGetArenaHi();
+void OSSetArenaLo(void* lo);
+void OSSetArenaHi(void* hi);
 int OSGetConsoleType();
 int OSDisableInterrupts(void);
 int OSEnableInterrupts(void);
@@ -693,6 +700,7 @@ int MTH_CheckEnd();
 /*** HSD Library ***/
 int HSD_GetHeapID();
 void HSD_SetHeapID(int heap);
+void HSD_GetNextArena(void** lo, void** hi);
 
 /*** VI ***/
 u32 VIGetNextField();
@@ -717,7 +725,7 @@ char* toupper(char c); // returns a pointer to the upper/lower character in a lo
 char* tolower(char c); // returns a pointer to the upper/lower character in a lookup table
 
 void* memset(void *ptr, int value, int bytes);
-void* memcpy(void *restrict s1, const void *restrict s2, size_t size);
+void* memcpy(void *restrict dest, const void *restrict src, size_t size);
 int memcmp(const void *s1, const void *s2, size_t n);
 void* memmove(void *dest, const void *src, size_t n);
 

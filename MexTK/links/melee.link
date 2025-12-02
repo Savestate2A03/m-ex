@@ -505,6 +505,7 @@
 8015CC58:Memcard_GetRules4
 8015ECB0:BGM_GetMenuBGM
 8015ECBC:BGM_DecideMenuBGM
+8015FEB4:MeleeMain
 80160968:Fighter_GetPlyHUDColor
 80160980:Fighter_GetName
 80164840:Fighter_CheckUnlocked
@@ -548,6 +549,7 @@
 801A42D4:Scene_ExitMajor
 801A42E8:Scene_SetNextMajor
 801A4310:Scene_GetCurrentMajor
+801A4510:Scene_Main
 801A45E8:Pause_CheckStatus
 801A4634:Match_FreezeGame
 801A4674:Match_UnfreezeGame
@@ -764,6 +766,7 @@
 80321CE8:SFX_StopCrowd
 80322E54:cvt_dbl_usll
 80322E54:__fixunsdfdi
+80322F9C:MeleeExit
 803230A4:blr2
 80323560:toupper
 80323588:tolower
@@ -873,6 +876,11 @@
 803440E8:OSCreateHeap
 80344154:OSDestroyHeap
 80344168:OSCheckHeap
+803444C8:OSGetArenaHi
+803444D0:OSGetArenaLo
+803444D8:OSSetArenaHi
+803444E0:OSSetArenaLo
+803444E8:OSAllocFromArenaLo
 803447DC:DCInvalidateRange
 8034480C:DCFlushRange
 80344874:DCFlushRangeNoSync
@@ -1037,6 +1045,7 @@
 80374A88:CObj_SetEraseColor
 80375404:HSD_GetHeapID
 8037540C:HSD_SetHeapID
+80375414:HSD_GetNextArena
 80375538:HSD_StartRender
 803755F8:HSD_ObjDumpStat
 80375C34:HSD_VIPostRetraceCallback
@@ -1158,6 +1167,7 @@
 803D7094:MEX_GetData
 803D709C:MEX_LoadRelArchive
 803DA888:stc_pause_plink_whitelists
+803DA920:stc_Scene_MinorDescTable
 803DDEC8:stc_clsc_lineup
 803F0A48:stc_css_data
 803F9628:stc_exclam_data
@@ -1206,6 +1216,8 @@
 804D49EC:stc_gr_lookup_cur
 804D4A08:stc_dblevel
 804D50C8:stc_css_unkarr
+804D5C10:__OSArenaLo
+804D5E14:stc_max_number_of_heaps
 804D5F94:stc_rng_seed
 804D6018:__OSCurrHeap
 804D6038:stc_bgm_data
@@ -1275,6 +1287,7 @@
 804D727C:stc_fst_entries
 804D7280:stc_fst_filenames
 804D7284:stc_fst_totalentrynum
+804D7360:stc_ptr_to_OSHeapArray
 804D740C:stc_si_sampling_rate
 804D76C8:stc_hsd_pixelfmt
 804D774C:stc_bgm_vpb
