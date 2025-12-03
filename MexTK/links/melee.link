@@ -884,6 +884,7 @@
 803447DC:DCInvalidateRange
 8034480C:DCFlushRange
 80344874:DCFlushRangeNoSync
+803448D4:ICInvalidateRange
 80345254:OSClearContext
 803456A8:OSReport
 80345728:OSPanic

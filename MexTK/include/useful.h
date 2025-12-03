@@ -686,6 +686,7 @@ int SIGetResponse(s32 chan, void *out);
 void DCFlushRange(void *startAddr, u32 nBytes);
 void DCFlushRangeNoSync(void *startAddr, u32 nBytes);
 void DCInvalidateRange(void *startAddr, u32 nBytes);
+void ICInvalidateRange(void *startAddr, u32 nBytes);
 void TRK_FlushCache(void *startAddr, u32 nBytes);
 void blr();
 void blr2();
